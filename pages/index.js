@@ -4,7 +4,7 @@ import styles from "../styles/index.module.css"
 import { getRandomElement } from "../utils/arrays"
 import BackgroundSwitcher from "../components/background-switcher"
 
-const IMAGE_CHANGE_INTERVAL = 30
+const IMAGE_CHANGE_INTERVAL = 15
 const STREAM = "https://s2.voscast.com:8969/stream.ogg"
 
 export async function getStaticProps() {
@@ -13,6 +13,7 @@ export async function getStaticProps() {
     .context("../public/gifs", true)
     .keys()
     .map((dirty) => dirty.replace("./", ""))
+    //.filter(x => x.includes('.mp4')) for test purposes
   return { props: { gifs } }
 }
 

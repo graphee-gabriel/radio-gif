@@ -9,14 +9,11 @@
 }
 
 .gif {
-  transition: all 0.5ms linear;
+  /*transition: all 0.5ms linear;*/
 }
 
 .video {
-  position: absolute;
-  transition: all 0.5ms linear;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  object-fit: cover;
 }
