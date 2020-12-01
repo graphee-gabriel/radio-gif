@@ -47,6 +47,14 @@ export default function Home({ gifs }) {
 
       <main className={`${styles.main} hoverable-to-show`}>
         <div style={{ zIndex: 999 }}>
+          <h1 className="hide-on-hover">RadioGif</h1>
+          <a
+            className={styles.createYourOwn}
+            href="mailto:contact.gabriel.morin@gmail.com"
+          >
+            Create your own
+          </a>
+          <div className="grayscreen" />
           <audio
             id="player"
             preload="auto"
@@ -67,8 +75,6 @@ export default function Home({ gifs }) {
               Pause
             </button>
           )}
-          <h1 className="hide-on-hover">RadioGif</h1>
-          <div className="grayscreen" />
         </div>
         <BackgroundSwitcher url={gifUrl} />
       </main>

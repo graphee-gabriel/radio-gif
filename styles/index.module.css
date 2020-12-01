@@ -17,3 +17,10 @@
   max-width: 800px!important;
   overflow: hidden;
 }
+
+.createYourOwn {
+  position: fixed;
+  bottom: 2rem;
+  left: 50vw;
+  transform: translateX(-50%);
+}
