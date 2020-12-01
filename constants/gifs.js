@@ -8,7 +8,6 @@ export const GIFS = [
   "https://media3.giphy.com/media/dZKdgElhMNTiLcIHvZ/giphy.mp4",
   "https://media3.giphy.com/media/UV47YkTJbUFxSVnEuV/giphy.mp4",
   "https://media3.giphy.com/media/3o7aD9hC4HyZ1ZPJgk/giphy.mp4",
-  "https://media3.giphy.com/media/bufKX8ejZFDA4/giphy.mp4",
   "https://media3.giphy.com/media/pJEfYqdWXVjAk/giphy.mp4",
   "https://media3.giphy.com/media/l0IsIJE63zBQBVwfm/giphy.mp4",
   "https://media3.giphy.com/media/3o6Ztp7GlqlADQWWgE/giphy.mp4",
