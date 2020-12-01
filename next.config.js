@@ -8,6 +8,7 @@ module.exports = withVideos(
       [
         optimizedImages,
         {
+          handleImages: ['jpeg', 'png', 'svg', 'webp', 'gif'],
           /* config for next-optimized-images */
         },
       ],
