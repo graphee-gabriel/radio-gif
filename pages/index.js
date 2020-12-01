@@ -11,12 +11,16 @@ const STREAM = "https://s2.voscast.com:8969/stream.ogg"
 
 const getRandomGif = () => getRandomElement(GIFS)
 const fetchSongMetaData = async () => {
-  const res = await fetch(`https://nicecream.fm/api/currentsong?streamUrl=${STREAM}`)
-  const currentSong = await res.json()
-  const { song } = currentSong || {}
-  if (song) {
-    const [author, name] = song.split("-") || [null, null]
-    return { author, name }
+  try {
+    const res = await fetch(`https://nicecream.fm/api/currentsong?streamUrl=${STREAM}`)
+    const currentSong = await res.json()
+    const { song } = currentSong || {}
+    if (song) {
+      const [author, name] = song.split("-") || [null, null]
+      return { author, name }
+    }
+  } catch (err) {
+    console.error("could not fetch song name", err)
   }
   return { name: null, author: null }
 }
