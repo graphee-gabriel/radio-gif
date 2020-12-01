@@ -13,7 +13,7 @@ export async function getStaticProps() {
     .context("../public/gifs", true)
     .keys()
     .map((dirty) => dirty.replace("./", ""))
-    //.filter(x => x.includes('.mp4')) for test purposes
+  //.filter(x => x.includes('.mp4')) for test purposes
   return { props: { gifs } }
 }
 
@@ -38,6 +38,11 @@ export default function Home({ gifs }) {
       <Head>
         <title>Radio Gif</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap"
+          rel="stylesheet"
+        />
       </Head>
 
       <main className={`${styles.main} hoverable-to-show`}>
@@ -62,6 +67,8 @@ export default function Home({ gifs }) {
               Pause
             </button>
           )}
+          <h1 className="hide-on-hover">RadioGif</h1>
+          <div className="grayscreen" />
         </div>
         <BackgroundSwitcher url={gifUrl} />
       </main>
