@@ -39,7 +39,7 @@ export default function Home({ gifs }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className={`${styles.main} hoverable-to-show`}>
         <div style={{ zIndex: 999 }}>
           <audio
             id="player"
@@ -51,8 +51,8 @@ export default function Home({ gifs }) {
           >
             <source src={STREAM} type="audio/ogg" />
           </audio>
-          {audioStatus === "paused" && <button onClick={onClickPlay}>Play</button>}
-          {audioStatus === "playing" && <button onClick={onClickPause}>Pause</button>}
+          {audioStatus === "paused" && <button className="show-on-hover" onClick={onClickPlay}>Play</button>}
+          {audioStatus === "playing" && <button className="show-on-hover" onClick={onClickPause}>Pause</button>}
         </div>
         <BackgroundSwitcher url={gifUrl} />
       </main>

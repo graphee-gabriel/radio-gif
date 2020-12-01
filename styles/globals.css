@@ -53,3 +53,13 @@ button:hover {
   background-color: white;
   color: rgba(0, 0, 0);
 }
+
+.show-on-hover {
+  opacity: 0;
+  transition: opacity 0.175s linear;
+}
+
+
+.hoverable-to-show:hover .show-on-hover {
+  opacity: 1;
+}
