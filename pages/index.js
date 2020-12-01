@@ -4,7 +4,7 @@ import styles from "../styles/index.module.css"
 import { getRandomElement } from "../utils/arrays"
 import BackgroundSwitcher from "../components/background-switcher"
 
-const IMAGE_CHANGE_INTERVAL = 10
+const IMAGE_CHANGE_INTERVAL = 30
 const STREAM = "https://s2.voscast.com:8969/stream.ogg"
 
 export async function getStaticProps() {
