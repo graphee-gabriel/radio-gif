@@ -3,23 +3,26 @@ import Head from "next/head"
 import styles from "../styles/index.module.css"
 import { getRandomElement } from "../utils/arrays"
 import BackgroundSwitcher from "../components/background-switcher"
+import { GIFS } from "../constants/gifs"
 
-const IMAGE_CHANGE_INTERVAL = 15
-const SONG_UPDATE_INTERVAL = 15
+const IMAGE_CHANGE_INTERVAL = 15 * 1000
+const SONG_UPDATE_INTERVAL = 15 * 1000
 const STREAM = "https://s2.voscast.com:8969/stream.ogg"
 
-export async function getStaticProps() {
-  // Call an external API endpoint to get posts
-  const gifs = require
-    .context("../public/gifs", true)
-    .keys()
-    .map((dirty) => dirty.replace("./", ""))
-  //.filter(x => x.includes('.mp4')) for test purposes
-  return { props: { gifs } }
+const getRandomGif = () => getRandomElement(GIFS)
+const fetchSongMetaData = async () => {
+  const res = await fetch(`https://nicecream.fm/api/currentsong?streamUrl=${STREAM}`)
+  const currentSong = await res.json()
+  const { song } = currentSong || {}
+  if (song) {
+    const [author, name] = song.split("-") || [null, null]
+    return { author, name }
+  }
+  return { name: null, author: null }
 }
 
-export default function Home({ gifs }) {
-  const [gifUrl, setGifURl] = useState(getRandomElement(gifs))
+export default function Home() {
+  const [gifUrl, setGifURl] = useState(getRandomGif())
   const [audioStatus, setAudioStatus] = useState("paused")
   const [songName, setSongName] = useState()
   const [songAuthor, setSongAuthor] = useState()
@@ -30,23 +33,16 @@ export default function Home({ gifs }) {
   const onClickPlay = () => player().play()
   const onClickPause = () => player().pause()
   const updateSongName = async () => {
-    const res = await fetch(`https://nicecream.fm/api/currentsong?streamUrl=${STREAM}`)
-    const currentSong = await res.json()
-    const { song } = currentSong || {}
-    if (song) {
-      const [author, name] = song.split("-") || [null, null]
-      setSongName(name)
-      setSongAuthor(author)
-    }
+    const { name, author } = await fetchSongMetaData()
+    setSongName(name)
+    setSongAuthor(author)
   }
+  const updateGif = () => setGifURl(getRandomGif())
 
-  useEffect(() => {
-    setInterval(() => {
-      setGifURl(getRandomElement(gifs))
-    }, 1000 * IMAGE_CHANGE_INTERVAL)
-    // noinspection JSIgnoredPromiseFromCall
-    updateSongName()
-    setInterval(updateSongName, SONG_UPDATE_INTERVAL * 1000)
+  useEffect(async () => {
+    setInterval(updateGif, IMAGE_CHANGE_INTERVAL)
+    setInterval(updateSongName, SONG_UPDATE_INTERVAL)
+    await updateSongName()
   }, [])
 
   return (
@@ -62,7 +58,7 @@ export default function Home({ gifs }) {
       </Head>
 
       <main className={`${styles.main} hoverable-to-show`}>
-        <div style={{ zIndex: 999 }}>
+        <div className={styles.content}>
           {songAuthor && (
             <div className={styles.songMetaData}>
               <h4>{songAuthor}</h4>

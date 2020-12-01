@@ -1,5 +1,6 @@
 .container {
   min-height: 100vh;
+  min-width: 100vw;
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
@@ -16,6 +17,19 @@
   align-items: center;
   max-width: 800px !important;
   overflow: hidden;
+}
+
+.content {
+  z-index: 999;
+  width: 100vw;
+}
+
+.content button {
+  position: fixed;
+  left: 50vw;
+  top: 51vh;
+  transform: translate(-50%,-50%);
+
 }
 
 .createYourOwn {

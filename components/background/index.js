@@ -9,14 +9,9 @@ export default function Background({ url, className }) {
   return (
     <div className={`${styles.container} ${className}`}>
       {isVideo ? (
-        <video autoPlay={true} loop muted className={styles.video} src={`/gifs/${url}`} />
+        <video autoPlay={true} loop muted className={styles.video} src={url} />
       ) : (
-        <Image
-          className={styles.gif}
-          src={`/gifs/${url}`}
-          layout="fill"
-          objectFit={fit || "cover"}
-        />
+        <Image className={styles.gif} src={url} layout="fill" objectFit={fit || "cover"} />
       )}
     </div>
   )
