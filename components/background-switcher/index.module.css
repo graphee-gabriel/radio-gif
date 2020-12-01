@@ -1,0 +1,8 @@
+.container {
+}
+
+.grayscreen {
+  background-color: rgba(60, 60, 60, 0.15);
+  z-index: 3;
+  /* cursor: pointer; */
+}
