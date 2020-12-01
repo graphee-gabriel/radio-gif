@@ -23,6 +23,8 @@ export default function Home({ gifs }) {
   const onPlaying = () => setAudioStatus("playing")
   const onPause = () => setAudioStatus("paused")
   const onWaiting = () => setAudioStatus("loading")
+  const onClickPlay = () => player().play()
+  const onClickPause = () => player().pause()
 
   useEffect(() => {
     setInterval(() => {
@@ -30,8 +32,6 @@ export default function Home({ gifs }) {
     }, 1000 * IMAGE_CHANGE_INTERVAL)
   }, [])
 
-  const onClickPlay = () => player().play()
-  const onClickPause = () => player().pause()
   return (
     <div className={styles.container}>
       <Head>
@@ -51,8 +51,16 @@ export default function Home({ gifs }) {
           >
             <source src={STREAM} type="audio/ogg" />
           </audio>
-          {audioStatus === "paused" && <button className="show-on-hover" onClick={onClickPlay}>Play</button>}
-          {audioStatus === "playing" && <button className="show-on-hover" onClick={onClickPause}>Pause</button>}
+          {audioStatus === "paused" && (
+            <button className="show-on-hover" onClick={onClickPlay}>
+              Play
+            </button>
+          )}
+          {audioStatus === "playing" && (
+            <button className="show-on-hover" onClick={onClickPause}>
+              Pause
+            </button>
+          )}
         </div>
         <BackgroundSwitcher url={gifUrl} />
       </main>
