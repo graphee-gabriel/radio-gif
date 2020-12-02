@@ -41,6 +41,9 @@ export default function Home() {
     setSongName(name)
     setSongAuthor(author)
   }
+  const searchSongUrl = `https://open.spotify.com/search/${encodeURIComponent(
+    `${songAuthor} ${songName}`
+  )}`
   const updateGif = () => setGifURl(getRandomGif())
 
   useEffect(async () => {
@@ -64,10 +67,12 @@ export default function Home() {
       <main className={`${styles.main} hoverable-to-show`}>
         <div className={styles.content}>
           {songAuthor && (
-            <div className={styles.songMetaData}>
-              <h4>{songAuthor}</h4>
-              <h3>{songName}</h3>
-            </div>
+            <a href={searchSongUrl} target="_blank">
+              <div className={styles.songMetaData}>
+                <h4>{songAuthor}</h4>
+                <h3>{songName}</h3>
+              </div>
+            </a>
           )}
           <h1 className="hide-on-hover">RadioGif</h1>
           <a className={styles.createYourOwn} href="mailto:contact.gabriel.morin@gmail.com">
