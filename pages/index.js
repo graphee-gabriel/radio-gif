@@ -99,6 +99,12 @@ export default function Home() {
               Pause
             </button>
           )}
+          {audioStatus === "loading" && (
+            <img
+              className={`show-on-hover ${styles.loading}`}
+              src="https://media2.giphy.com/media/f8QYZDGybNNTO4GZIX/giphy.gif"
+            />
+          )}
         </div>
         <BackgroundSwitcher url={gifUrl} />
       </main>

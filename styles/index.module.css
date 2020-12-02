@@ -63,3 +63,13 @@
   font-size: 1rem;
   font-weight: normal;
 }
+
+.loading {
+  position: fixed;
+  left: 50vw;
+  top: 51vh;
+  width: 9rem;
+  height: 9rem;
+  transform: translate(-50%,-50%);
+  background: transparent;
+}
