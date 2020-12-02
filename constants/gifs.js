@@ -41,7 +41,7 @@ export const GIFS = [
   "https://media3.giphy.com/media/3o8doT9BL7dgtolp7O/giphy.mp4",
   "https://media3.giphy.com/media/26tPplGWjN0xLybiU/giphy.mp4",
   // "https://media3.giphy.com/media/ASd0Ukj0y3qMM/giphy.mp4",
-  
+
   // rick and morty
   "https://media3.giphy.com/media/3oEduU2JjgQUGKyNvG/giphy.mp4",
 

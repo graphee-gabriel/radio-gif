@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import Head from "next/head"
 import styles from "../styles/index.module.css"
 import { getRandomElement } from "../utils/arrays"
 import BackgroundSwitcher from "../components/background-switcher"
 import { GIFS } from "../constants/gifs"
+import { getLastSplitSegment } from "../utils/strings"
 
 const IMAGE_CHANGE_INTERVAL = 15 * 1000
 const SONG_UPDATE_INTERVAL = 15 * 1000
 const STREAM = "https://s2.voscast.com:8969/stream.ogg"
 
-const getRandomGif = () => getRandomElement(GIFS)
-const fetchSongMetaData = async () => {
+const fetchSongMetaData = async (stream) => {
   try {
-    const res = await fetch(`https://nicecream.fm/api/currentsong?streamUrl=${STREAM}`)
+    const res = await fetch(`https://nicecream.fm/api/currentsong?streamUrl=${stream}`)
     const currentSong = await res.json()
     const { song } = currentSong || {}
     if (song) {
@@ -25,8 +25,24 @@ const fetchSongMetaData = async () => {
   return { name: null, author: null }
 }
 
-export default function Home() {
-  const [gifUrl, setGifURl] = useState(getRandomGif())
+// noinspection JSUnusedGlobalSymbols
+export async function getServerSideProps(ctx) {
+  const { query } = ctx
+  return {
+    props: {
+      stream: query.stream || STREAM,
+      gifs: query.gifs
+        ? query.gifs
+            .split(",")
+            .map((url) => getLastSplitSegment(getLastSplitSegment(url, "/"), "-")) // get /slug-UUID, and split to keep UUID
+            .map((uuid) => `https://i.giphy.com/media/${uuid}/giphy.mp4`)
+        : GIFS,
+    },
+  }
+}
+
+export default function Home({ gifs, stream }) {
+  const [gifUrl, setGifURl] = useState(getRandomElement(gifs))
   const [audioStatus, setAudioStatus] = useState("paused")
   const [songName, setSongName] = useState()
   const [songAuthor, setSongAuthor] = useState()
@@ -37,19 +53,24 @@ export default function Home() {
   const onClickPlay = () => player().play()
   const onClickPause = () => player().pause()
   const updateSongName = async () => {
-    const { name, author } = await fetchSongMetaData()
+    const { name, author } = await fetchSongMetaData(stream)
     setSongName(name)
     setSongAuthor(author)
   }
   const searchSongUrl = `https://open.spotify.com/search/${encodeURIComponent(
     `${songAuthor} ${songName}`
   )}`
-  const updateGif = () => setGifURl(getRandomGif())
 
   useEffect(async () => {
-    setInterval(updateGif, IMAGE_CHANGE_INTERVAL)
-    setInterval(updateSongName, SONG_UPDATE_INTERVAL)
+    const updateGif = () => setGifURl(getRandomElement(gifs))
+    let intervalImageId = setInterval(updateGif, IMAGE_CHANGE_INTERVAL)
+    let intervalSongId = setInterval(updateSongName, SONG_UPDATE_INTERVAL)
+    updateGif()
     await updateSongName()
+    return () => {
+      clearInterval(intervalImageId)
+      clearInterval(intervalSongId)
+    }
   }, [])
 
   return (
@@ -87,7 +108,7 @@ export default function Home() {
             onPlaying={onPlaying}
             autoPlay={true}
           >
-            <source src={STREAM} type="audio/ogg" />
+            <source src={stream} type="audio/ogg" />
           </audio>
           {audioStatus === "paused" && (
             <button className="show-on-hover" onClick={onClickPlay}>
