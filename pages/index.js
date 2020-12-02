@@ -16,7 +16,7 @@ const fetchSongMetaData = async () => {
     const currentSong = await res.json()
     const { song } = currentSong || {}
     if (song) {
-      const [author, name] = song.split("-") || [null, null]
+      const [author, name] = song.split(" - ") || [null, null]
       return { author, name }
     }
   } catch (err) {
