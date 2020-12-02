@@ -65,7 +65,6 @@ export default function Home({ gifs, stream }) {
     const updateGif = () => setGifURl(getRandomElement(gifs))
     let intervalImageId = setInterval(updateGif, IMAGE_CHANGE_INTERVAL)
     let intervalSongId = setInterval(updateSongName, SONG_UPDATE_INTERVAL)
-    updateGif()
     await updateSongName()
     return () => {
       clearInterval(intervalImageId)
